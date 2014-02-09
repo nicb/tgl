@@ -1,0 +1,46 @@
+%
+% $Id: macros.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+%=============================================================
+% project specs
+%=============================================================
+\newcommand{\TITLE}{<%= @project.title -%>\xspace}
+\newcommand{\ACRO}{<%= @project.acronym -%>\xspace}
+\newcommand{\ICTCALL}{<%= @project.ict_call_no -%>\xspace}
+\newcommand{\YEAR}{<%= @project.year -%>\xspace}
+\newcommand{\CALL}{<%= @project.call -%>\xspace}
+\newcommand{\TYPE}{<%= @project.read_attribute('type') -%>\xspace}
+\newcommand{\TYPEACRO}{<%= @project.type_acro -%>\xspace}
+\newcommand{\CHALLENGE}{<%= @project.challenge -%>\xspace}
+\newcommand{\TOPICS}{<%= @project.topic -%>\xspace}
+\newcommand{\PNUMBER}{<%= @project.proposal_number -%>\xspace}
+%=============================================================
+% project facts
+%=============================================================
+\newcommand{\DURATION}{<%= @project.duration -%>\xspace}
+\newcommand{\WPSNUM}{<%= @workpackages.size -%>\xspace}
+\newcommand{\DELSNUM}{<%= @deliverables.size -%>\xspace}
+\newcommand{\MILSNUM}{<%= @milestones.size -%>\xspace}
+\newcommand{\PARTNSNUM}{<%= @partners.size -%>\xspace}
+%=============================================================
+% work packages
+%=============================================================
+<% @workpackages.each do |wp| -%>
+  \newcommand{\WP<%= wp.cap_text_number -%>}{<%= wp.name -%>\xspace}
+  \newcommand{\WP<%= wp.cap_text_number -%>NUM}{<%= wp.number -%>\xspace}
+<% end -%>
+%=============================================================
+% partners
+%=============================================================
+<% @partners.each do |p| -%>
+  \newcommand{\P<%= p.cap_text_number -%>}{<%= p.name -%>\xspace}
+  \newcommand{\P<%= p.cap_text_number -%>NUM}{<%= p.position -%>\xspace}
+  \newcommand{\THEP<%= p.cap_text_number -%>NUM}{<%= p.partner_tag -%>\xspace}
+  \newcommand{\P<%= p.cap_text_number -%>ACRO}{<%= p.acronym -%>\xspace}
+  \newcommand{\<%= p.acronym -%>ACRO}{<%= p.acronym -%>\xspace}
+  \newcommand{\<%= p.acronym -%>LONG}{<%= p.name -%>\xspace}
+  \newcommand{\<%= p.acronym -%>NUM}{<%= p.position -%>\xspace}
+  \newcommand{\THE<%= p.acronym -%>NUM}{<%= p.partner_tag -%>\xspace}
+<% end -%>
+%=============================================================
+

@@ -1,0 +1,29 @@
+%
+% $Id: preA3.1_template.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}[t]{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.4\textwidth}|}
+  \hline
+  \multicolumn{1}{|c|}{Description}
+  & \multicolumn{1}{c|}{Value}
+  & \multicolumn{1}{c|}{Notes}\\
+  \hline
+  Partner\Ts & \multicolumn{1}{c|}{<%= @partner.partner_tag -%>}\Bs &\\
+  \hline
+  Institution\Ts & \multicolumn{1}{p{0.2\textwidth}|}{\centering <%= @partner.name -%>}\Bs &\\
+  \hline
+  Acronym\Ts & \multicolumn{1}{c|}{<%= @partner.acronym -%>}\Bs &\\
+  \hline
+  Effort requested\Ts & \multicolumn{1}{c|}{<%= @partner.maximum_effort.to_i -%>}\Bs & P/M Effort requested to partner \\
+  \hline
+  Actual effort\Ts & \multicolumn{1}{c|}{<%= @partner.total_effort.to_i -%>}\Bs & Computed P/M Effort requested to partner \\
+  \hline
+  Allocated budget\Ts & \multicolumn{1}{r|}{\euro{<%= @partner.allocated_budget.to_euro -%>}}\Bs
+    & Portion of requested budget allocated to partner\\
+  \hline
+  Nominal P/M cost\Ts & \multicolumn{1}{r|}{\euro{<%= @partner.pm_cost.to_euro -%>}}\Bs
+    & Nominal P/M cost communicated by partner (or otherwise calculated)\\
+  \hline
+  Actual funding\Ts & \multicolumn{1}{r|}{\euro{<%= @partner.total_funded_costs.to_euro -%>}}\Bs
+    & Actual funding allocated to partner (as result of p/m rounding)\\
+  \hline
+\end{tabular}

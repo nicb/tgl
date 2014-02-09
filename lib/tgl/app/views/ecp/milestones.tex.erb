@@ -1,0 +1,24 @@
+%
+% $Id: milestones.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}{|p{0.05\textwidth}|p{0.25\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|p{0.25\textwidth}|}
+\hline
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{Mi\-le\-stone n.}}\Ts
+ &
+\multicolumn{1}{|p{0.25\textwidth}}{\centering\textbf{Milestone name}}\Bs
+ &
+\multicolumn{1}{|p{0.1\textwidth}}{\centering\textbf{Work package(s) involved}}
+ &
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{Ex\-pec\-ted date}}
+ &
+\multicolumn{1}{|p{0.25\textwidth}|}{\centering\textbf{Means of verification}}
+\\
+<% @milestones.each do |m| -%>
+    \hline
+    \multicolumn{1}{|c|}{<%= m.position -%>}\Ts
+    & <%= m.name -%>\Bs &  <%= m.work_packages.uniq.join(', ') -%> & \multicolumn{1}{|c|}{<%= m.month -%>}
+    &  <%= m.deliverables.map { |d| d.d_id }.join(', ') -%>\\
+<% end -%>
+\hline
+\end{tabular}
+

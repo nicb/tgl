@@ -1,0 +1,22 @@
+"WP No.","N.","Deliverable Name","Nature","Diss. Level","Date (month)","Milestone"
+1,1,"Management Report 1","R","PU",12,2
+1,2,"Management Report 2","R","PU",24,3
+1,3,"Management Report 3","R","PU",36,4
+2,"1-2","User Requirements and Test Collection","R","RE",6,1
+2,3,"User Evaluation","R","PU",24,2
+3,1,"Design Report on the Architecture","R","PU",12,1
+3,2,"Implementation of APIs","P","PU",24,2
+3,3,"Guidelines for System Configuration","R","PU",30,3
+4,1,"Advanced Media Analysis -- Early Version","P","PP",12,3
+4,2,"Advanced Media Analysis -- Final Version","P","PP",24,3
+5,"1-2","Audiovisual Content Identification and Alignment","P","PU",24,3
+5,3,"Content-based Similarity Search","R","PU",36,4
+6,1,"Collaborative Ontologies","R","PU",18,3
+6,2,"Multimedia Content Bindings","R","PU",24,3
+6,"3-4","Templates for Users' Views and Demonstrator","P","PU",36,4
+7,1,"Formats for Content Description Rights","R","PU",18,2
+7,2,"Schema to Represent Content Description Rights","R","PU",24,3
+7,3,"Prototype for IPR Management for Content Descriptors","P","PU",36,4
+8,1,"First Report on Publications and Dissemination","R","PU",12,2
+8,2,"Second Report on Publications and Dissemination","O","PU",24,3
+8,3,"Public Event Associated to Film/Music Festival","R","PU",36,4

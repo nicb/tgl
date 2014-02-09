@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+#
+#  $Id: table_generator 1 2011-01-15 23:37:56Z nicb $
+#
+#  Created on 2011-1-16.
+#  Copyright (c) 2011. All rights reserved.
+
+require 'rubygems'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/tgl")
+require "table_generator/cli"
+
+TableGenerator::CLI.execute(STDOUT, ARGV)

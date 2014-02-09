@@ -1,0 +1,44 @@
+%
+% $Id: individual_workpackage.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%  
+<%
+  full_width = 0.8
+  lsidewidth = 0.19
+  shrink_factor = 0.9
+  pwidth = ((full_width - lsidewidth)/@wp.partners.size)*shrink_factor
+-%>
+\begin{tabular}{
+     |p{<%= lsidewidth -%>\textwidth}|
+     *{<%= @wp.partners.size -%>}{p{<%= pwidth -%>\textwidth}|}}
+\hline
+Work package number\Ts & <%= @wp.position -%>\Bs &
+  \multicolumn{<%= @wp.partners.size-2 -%>}{|l|}{Start date or starting event} &
+  Month <%= @wp.start_month -%>\\
+\hline
+Work package title\Ts &
+\multicolumn{<%= @wp.partners.size -%>}{|l|}{\bfseries <%= @wp.name -%>}\Bs
+\\
+\hline
+Activity type\Ts &
+\multicolumn{<%= @wp.partners.size -%>}{|l|}{<%= @wp.activity -%>}\Bs
+\\
+\hline
+Participant number\Ts\Bs
+  <% @wp.partners.each do |p| -%>
+      & \multicolumn{1}{p{<%= pwidth -%>\textwidth}|}{\centering{<%= p.bold_if_leader(@wp) -%> <%= p.partner_tag -%>}}
+  <% end -%>
+\\
+\hline
+Participant short name\Ts\Bs
+  <% @wp.partners.each do |p| -%>
+      & \multicolumn{1}{p{<%= pwidth -%>\textwidth}|}{\centering{<%= p.bold_if_leader(@wp) -%> <%= p.acronym -%>}}
+  <% end -%>
+\\
+\hline
+Person-months per\Ts\newline participant\Bs
+  <% @wp.partners.each do |p| -%>
+      & \multicolumn{1}{p{<%= pwidth -%>\textwidth}|}{\centering{<%= p.bold_if_leader(@wp) -%> <%= p.efforts[@wp.position-1].person_months -%>}}
+  <% end -%>
+\\
+\hline
+\end{tabular}

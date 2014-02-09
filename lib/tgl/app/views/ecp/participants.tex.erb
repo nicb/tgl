@@ -1,0 +1,19 @@
+%
+% $Id: participants.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}{|p{0.125\textwidth}|p{0.4\textwidth}|p{0.125\textwidth}|p{0.25\textwidth}|}
+\hline
+\multicolumn{1}{|p{0.125\textwidth}}{\centering\textbf{Participant no.}}\Ts
+&
+\multicolumn{1}{|p{0.4\textwidth}}{\centering\textbf{Participant organization name}}\Bs
+&
+\multicolumn{1}{|p{0.125\textwidth}}{\centering\textbf{Part. short name}}
+&
+\multicolumn{1}{|p{0.25\textwidth}|}{\centering\textbf{Country}}
+\\
+<% @partners.each do |p| -%>
+    \hline
+    <%= p.position -%>\Ts & <%= p.name -%>\Bs & <%= p.acronym -%> & <%= p.country -%>\\
+<% end -%>
+\hline
+\end{tabular}

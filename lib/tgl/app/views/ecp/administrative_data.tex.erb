@@ -1,0 +1,30 @@
+%
+% $Id: administrative_data.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}{|*{3}{c|} *{6}{r|}}
+    \hline
+    & Partner\Ts
+    & \multicolumn{1}{p{0.04\textwidth}|}{\centering Effort}\Bs
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Personnel (\euro{})}
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Other (\euro{})}
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Direct (\euro{})}
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Indirect (\euro{})}
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Budget (\euro{})}
+    &  \multicolumn{1}{p{0.08\textwidth}|}{\centering Funded (\euro{})}\\[2\baselineskip]
+    \hline
+    <% @partners.each do |p| -%>
+        \hline
+        <%= p.partner_tag -%>\Ts
+        & <%= p.acronym -%>\Bs
+        & <%= p.total_effort.to_i -%>
+        &  <%= p.total_personnel_costs.to_euro -%>
+        &  <%= p.total_other_costs_costs.to_euro -%>
+        &  <%= p.total_direct_costs.to_euro -%>
+        &  <%= p.total_indirect_costs.to_euro -%>
+        &  <%= p.total_total_costs.to_euro -%>
+        &  <%= p.total_funded_costs.to_euro -%>\\[2\baselineskip]
+    <% end -%>
+    \hline\hline
+    \multicolumn{7}{|l|}{\bfseries Total Budget and funded}\Ts & <%= @project.total_budget.to_euro -%> & <%= @project.total_funded.to_euro -%>\Bs\\
+    \hline
+\end{tabular}

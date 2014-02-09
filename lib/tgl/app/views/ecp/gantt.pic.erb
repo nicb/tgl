@@ -1,0 +1,24 @@
+.PS
+#
+# $Id: gantt.pic.erb 2 2011-01-16 01:15:24Z nicb $
+#
+# Gantt chart for the <%= @project.acronym -%> project
+#
+copy "<%= File.join(File.dirname(__FILE__), Environment.share_dir, 'gantt.macros') -%>"
+
+gantt_chart_w_milestones(<%= @project.duration -%>,<%= @project.work_packages.size -%>,"Months","\s+2\f3Workpackages\fP\s0","\s6Created on <%= @now -%>\s0");
+
+<% n = 1; @project.work_packages.each do |wp| %>
+  <%= wp.pic_timeline_command(n) -%>,<%= wp.start_month -%>,<%= wp.end_month -%>);
+  <% n += 1 -%>
+<% end %>
+
+<% @project.milestones.each do |m| %>
+  milestone(<%= m.month -%>);
+<% end %>
+
+<% @project.deliverables.each do |d| %>
+  deliverable(<%= d.due -%>,<%= d.work_package.position -%>,"\s-4<%= d.d_id -%>\s0");
+<% end %>
+
+.PE

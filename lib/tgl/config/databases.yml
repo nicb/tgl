@@ -1,0 +1,7 @@
+#
+# $Id: databases.yml 2 2011-01-16 01:15:24Z nicb $
+#
+database:
+  adapter: sqlite3
+  database: database.sqlite3
+  timeout: 5000

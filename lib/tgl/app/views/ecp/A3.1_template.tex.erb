@@ -1,0 +1,111 @@
+%
+% $Id: A3.1_template.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{sffamily}
+	\fbox%
+	{%
+	    \parbox{0.99\textwidth}%
+	    {%
+        \colorbox{black}{\parbox{0.975\textwidth}{\large\centering\textcolor{white}{\bfseries Proposal Submission Form}}}\\[-0.5\baselineskip]
+        \parbox[t][][t]{0.975\textwidth}{\parbox[t]{0.33\textwidth}{\includegraphics[width=0.1\textwidth]{\figdir/euflag}\hspace{0.3em}%
+        \parbox[b][][t]{0.22\textwidth}{\addtolength{\baselineskip}{-0.25\baselineskip}%
+                   \bfseries EUROPEAN COMMISSION\\
+                  {\tiny 7th Framework Programme on\\
+                    Research, Technological\\
+                    Development and Demonstration}}}%
+                    \parbox[b][6ex][t]{0.22\textwidth}{\bfseries\tiny\centering
+            Coordination and support action\\
+            Coordination (or networking) actions}\hspace{0.6em}%
+            \parbox[b][][t]{0.43\textwidth}{\fontsize{32}{32}\selectfont\bfseries\flushright A3.1: Budget}}
+
+        \vspace{\baselineskip}
+
+				\begin{tabular}{l r l c l c}
+				    Proposal Number & \fbox{\textcolor{<%= @project.proposal_color -%>}{<%= @project.proposal_number -%>}}
+				    & Proposal Acronym & \fbox{<%= @project.acronym -%>}
+				    & Participant Number & \fbox{<%= @partner.position -%>}\\
+				\end{tabular}\\[\baselineskip]
+        In FP7, there are different methods for calculating indirect costs.
+        The various options are explained in the guidance notes**.\\ Please be
+        aware that not all options are available to all types of
+        organizations.\\[\baselineskip]
+        The method of determining indirect costs is set in the Proposal setup page.\\
+        If you would like to modify this information, you have to do it from
+        the proposal set-up page.
+
+        \fbox{\parbox{0.75\textwidth}{\tiny <%= @partner.cost_model.description -%>}}
+
+        \begin{tabular}{p{0.33\textwidth} p{0.17\textwidth}}
+            My legal entity is established in an ICPC
+            and I shall use the lump sum funding method
+            (If yes, please fill below the lump sum row only.
+            If no, please do not use the lump sum row) & \fbox{\parbox{0.17\textwidth}{no}}\\
+        \end{tabular}
+				
+				\begin{tabular}{p{0.25\textwidth} |*{7}{r|}}
+				  \hhline{~*{7}{-|}}
+				    & \multicolumn{7}{|c|}{Type of Activity}\\
+				    & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.rtd_color -%>}{\centering RTD}}
+            & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.demo_color -%>}{\centering Demons\-tration}}
+            & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.coord_color -%>}{\centering Coordi\-nation}}
+            & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.supp_color -%>}{\centering Support}}
+            & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.mgmt_color -%>}{\centering Manage\-ment}}
+            & \multicolumn{1}{p{0.07\textwidth}}{\textcolor{<%= @project.other_color -%>}{\centering Other}}
+				    & \multicolumn{1}{p{0.07\textwidth}|}{\centering Total}\\
+				\hhline{~*{7}{-|}}
+				Personnel costs (in \euro{})
+          <% WorkPackage::ACTIVITY_TYPES.each do |at| -%>
+            & \textcolor{<%= @project.send("#{at.to_s.downcase}_color") -%>}{\hfill <%= @partner.personnel_costs_by_activity(at).to_euro -%>}
+          <% end %>
+				  & <%= @partner.send(Partner.total_by_cost_type_method_name('personnel')).to_euro -%>\\
+				\hhline{~*{7}{-|}}
+				\textcolor{lgray}{Subcontracting costs (in \euro{})}
+	          & \multicolumn{1}{|r|}{\textcolor{lgray}{0,00}}
+				    & \textcolor{lgray}{\hfill 0,00}
+				    & \textcolor{lgray}{\hfill 0,00}
+				    & \textcolor{lgray}{\hfill 0,00}
+				    & \textcolor{lgray}{\hfill 0,00}
+				    & \textcolor{lgray}{\hfill 0,00}
+				    & \textcolor{lgray}{\hfill 0,00}\\
+				\hhline{~*{7}{-|}}
+				Other costs (in \euro{})
+          <% WorkPackage::ACTIVITY_TYPES.each do |at| -%>
+            & \textcolor{<%= @project.send("#{at.to_s.downcase}_color") -%>}{\hfill <%= @partner.other_costs_costs_by_activity(at).to_euro -%>}
+          <% end %>
+				  & <%= @partner.send(Partner.total_by_cost_type_method_name('other_costs')).to_euro -%>\\
+				\hhline{~*{7}{-|}}
+				Indirect costs (in \euro{})
+          <% WorkPackage::ACTIVITY_TYPES.each do |at| -%>
+            & \textcolor{<%= @project.send("#{at.to_s.downcase}_color") -%>}{\hfill <%= @partner.indirect_costs_by_activity(at).to_euro -%>}
+          <% end %>
+				  & <%= @partner.send(Partner.total_by_cost_type_method_name('indirect')).to_euro -%>\\
+				\hhline{~*{7}{-|}}
+				\textcolor{lgray}{Lump sum, flat--rate or scale of unit (option only for ICPC) (in \euro{})}
+	          & \multicolumn{1}{|r|}{\textcolor{lgray}{0,00}}
+				    & \textcolor{lgray}{0,00}
+				    & \textcolor{lgray}{0,00}
+				    & \textcolor{lgray}{0,00}
+				    & \textcolor{lgray}{0,00}
+				    & \textcolor{lgray}{0,00}
+				    & \textcolor{lgray}{0,00}\\
+				\hhline{~*{7}{-|}}\\
+				\hhline{~*{7}{-|}}
+				Total budget (in \euro{})
+          <% WorkPackage::ACTIVITY_TYPES.each do |at| -%>
+            & \textcolor{<%= @project.send("#{at.to_s.downcase}_color") -%>}{\hfill <%= @partner.send(Partner.total_by_activity_method_name(at)).to_euro -%>}
+          <% end %>
+				  & \hfill <%= @partner.total_total_costs.to_euro -%>\\
+				\hhline{~*{7}{-|}}
+				Requested EC contribution (in \euro{})
+          <% WorkPackage::ACTIVITY_TYPES.each do |at| -%>
+            & \textcolor{<%= @project.send("#{at.to_s.downcase}_color") -%>}{\hfill <%= @partner.funded_costs_by_activity(at).to_euro -%>}
+          <% end %>
+				  & \hfill <%= @partner.total_funded_costs.to_euro -%>\\
+				\hhline{~*{7}{-|}}
+        \multicolumn{7}{l|}{Total Receipts (in \euro{})} &
+        \textcolor{lgray}{0,00}\\
+				\hhline{*{7}{~}|-|}
+				\end{tabular}%
+	    }%
+	}
+\end{sffamily}

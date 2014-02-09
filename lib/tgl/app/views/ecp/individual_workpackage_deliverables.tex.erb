@@ -1,0 +1,29 @@
+%
+% $Id: individual_workpackage_deliverables.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}{|p{0.08\textwidth}|p{0.35\textwidth}|*{4}{p{0.08\textwidth}|}}
+\hline
+\multicolumn{1}{|p{0.08\textwidth}}{\centering\textbf{Del. no.}}\Ts
+ &
+\multicolumn{1}{|p{0.3\textwidth}}{\centering\textbf{Deliverable name}}\Bs
+ &
+\multicolumn{1}{|p{0.08\textwidth}}{\centering\textbf{WP no.}}
+ &
+\multicolumn{1}{|p{0.08\textwidth}}{\centering\textbf{Nature}}
+ &
+\multicolumn{1}{|p{0.08\textwidth}}{\centering\textbf{Dissemi\-nation level}}
+ &
+\multicolumn{1}{|p{0.08\textwidth}|}{\centering\textbf{Delivery Date (proj. month)}}
+\\
+<% @wp.deliverables.each do |d| -%>
+  \hline
+  <%= d.d_id -%>\Ts
+  & \multicolumn{1}{|p{0.3\textwidth}}{<%= d.name -%>}\Bs
+  & \multicolumn{1}{|c|}{<%= @wp.position -%>}
+  & \multicolumn{1}{|c|}{<%= d.nature -%>}
+  & \multicolumn{1}{|c|}{<%= d.dissemination_level -%>}
+  & \multicolumn{1}{|c|}{<%= d.due -%>}
+  \\
+<% end -%>
+\hline
+\end{tabular}

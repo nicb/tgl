@@ -1,0 +1,14 @@
+History.txt
+Manifest.txt
+PostInstall.txt
+README.rdoc
+Rakefile
+bin/table_generator
+lib/table_generator/cli.rb
+lib/tgl.rb
+script/console
+script/destroy
+script/generate
+test/test_helper.rb
+test/test_table_generator_cli.rb
+test/test_tgl.rb

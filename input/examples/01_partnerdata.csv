@@ -1,0 +1,7 @@
+"Partner Name","Partner acro",Country,"P/M Cost","Cost model","Lump sum","OH rate","Audit costs","Pers./Other costs (%)",PIC,Effort,"Allocated Budget",Notes
+"University of Whatever",UNWHAT,Italy,3780,STFR,no,0.6,7838,0.08,999995602,,600000,"data to be validated"
+"Foundation of Everything",FEV,Italy,5208,STFR,no,0.6,9500,0.102,968770526,,300000,
+"Institut de Recherche et Coordination Poissons/Autruches",IRCPA,France,5000,AIC,no,0.8,7838,0.1,999594216,46,300000,"data to be validated"
+"Universitat Pompeu Magnu",UPM,Spain,5500,STFR,no,0.6,7500,0.08,999867077,,300000,"data to be validated"
+"FantaticSME S.r.l.",FASME,Italy,6100,STFR,no,0.6,7000,0.11,998322158,36,300000,"data to be validated"
+IPM,IPM,Israel,9434,AIC,no,0.59,10500,0,999787343,72,300000,"data to be validated"

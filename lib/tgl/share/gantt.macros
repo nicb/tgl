@@ -1,0 +1,280 @@
+.PS
+#
+# $Id: gantt.macros 2 2011-01-16 01:15:24Z nicb $
+# vi:set nowrap ts=4:
+#
+# PLEASE NOTE: THIS SET OF MACROS IS OBSOLETE AND IS SUPERSEDED (it
+# is kept for backward compatibility reasons only).
+# Please use the gantt-header.macros/gantt-defines.macros pair instead.
+#
+# we're using centimeters as units
+#
+scale=2.54
+#
+# 80 percent of an a4 page (the gantt_chart macro redefines maxpsht, though)
+#
+maxpsht=29.7*0.8
+maxpswid=20.99*0.85
+#
+# gantt_chart(periods,lines,<time scale>(string), \
+#             <vertical legenda>(string),<revision string>)
+#
+labelwidth_=4
+leeway_=labelwidth_*0.04;
+titleheight_=1.2
+labelheight_=titleheight_*0.7
+labeltitleheight_=titleheight_-labelheight_
+timewidth_=0
+tmp_=0
+l_=0
+cur_=0
+ncur_=0
+lpos_=0
+textht_=labelheight_*0.6;
+nlines=0
+define gantt_chart
+{
+	nlines		:= $2;
+	timewidth_	:= (maxpswid - labelwidth_)/$1;
+	maxpsht      = titleheight_+(labelheight_*nlines);
+	l_ := 0;
+
+	#
+	# the TheChart box has a reference function in the drawing: it sets
+	# the 0,0 coordinates at the left,top of the drawing; y coordinates
+	# will then follow a negative development
+	#
+	TheChart: box ht maxpsht wid maxpswid thick 2 with .nw at 0,0;
+	Titleline : line from TheChart.nw - (0,titleheight_) \
+	                   to TheChart.ne - (0,titleheight_) thick 2;
+	TitleLabelBox: box ht labeltitleheight_ wid (maxpswid-labelwidth_) \
+		with .ne at TheChart.ne $3
+
+	for l_ = 1 to nlines do
+	{
+		cur_ := titleheight_+(l_*labelheight_);
+		line from TheChart.nw - (0,cur_) to TheChart.ne - (0,cur_);
+	}
+
+	lpos_ := timewidth_*0.85;
+	for l_ = 0 to ($1-1) do
+	{
+		cur_ := labelwidth_+(l_*timewidth_);
+		ncur_ := labelwidth_+((l_+1)*timewidth_);
+		line from TheChart.nw + (cur_,-labeltitleheight_) to \
+			TheChart.sw + (cur_,0);
+		sprintf("%02.0f",l_+1) at last line.n + (lpos_,-textht_) rjust;
+	}
+
+	Legenda: box invis wid labelwidth_ ht titleheight_ $4 with .nw at \
+		TheChart.nw;
+
+	$5 at TheChart.sw - (0,0.2) ljust; # revision string
+}
+define gantt_chart_w_milestones
+{
+	nlines		:= $2+1; # one line for milestones	
+	
+    gantt_chart($1,nlines,$3,$4,$5);
+
+	MilestonesLabelBox: box invis ht labelheight_ wid labelwidth_ \
+		with .sw at TheChart.sw
+
+	"\f3Milestones\fP" at MilestonesLabelBox.w + (leeway_,0) ljust
+}
+#
+#
+tl_yoffset=0
+tl_ht=0
+tl_wid=0
+tl_xgutter=0
+tl_ygutter=0
+tl_xoffset=0;
+lwid_=0;
+tl_xshadeht=0;
+tl_yshadeht=0;
+startm=0;
+endm=0;
+define time_line_common
+{
+  startm := $2-1;
+  endm := $3-1;
+	tl_yoffset := labeltitleheight_+(labelheight_*$1);
+	tl_ht := labelheight_ * 0.5;
+	tl_ygutter := (labelheight_-tl_ht)/2;
+	lwid_ := (endm-startm+1)*timewidth_;
+	tl_wid := lwid_ - 0.1;
+	tl_xgutter := (lwid_-tl_wid)/2;
+	tl_xoffset := (startm*timewidth_)+tl_xgutter;
+	tl_xshadeht := 0.02;
+	tl_yshadeht := 0.03;
+
+	TimeLineLabel$1: box invis wid labelwidth_ ht labelheight_ \
+		with .nw at TheChart.nw + (0,-tl_yoffset);
+
+	TimeLine$1: box wid tl_wid ht tl_ht with .w at \
+		TimeLineLabel$1.e + (tl_xoffset,0) fill 0.2;
+
+	TimeLineShadeHor$1: box wid tl_wid ht tl_yshadeht with .nw at \
+		TimeLine$1.sw + (tl_xshadeht,0) fill 1;
+
+	TimeLineShadeVer$1: box wid tl_xshadeht ht tl_ht with .nw at \
+		TimeLine$1.ne + (0,-tl_yshadeht) fill 1;
+}
+#
+# For each time line, add this call:
+#
+# time_line(idx,<label>(string),start,end)
+#
+define time_line
+{
+	time_line_common($1,$3,$4);
+
+	line invis from TimeLineLabel$1.w + (leeway_,0) \
+		to TimeLineLabel$1.e - (leeway_,0);
+
+	$2 with .w at last line.w ljust;
+}
+#
+# and this one when the label is split over two lines
+#
+# time_line2(idx,<label 1>(string),<label 2>(string),start,end)
+#
+ht3_=0
+define time_line2
+{
+	ht3_ := labelheight_/6;
+
+	time_line_common($1,$4,$5);
+
+	line invis from TimeLineLabel$1.w + (leeway_,ht3_) \
+		to TimeLineLabel$1.e + (-leeway_,ht3_)
+
+	$2 with .w at last line.w ljust;
+
+	line invis from TimeLineLabel$1.w + (leeway_,-ht3_) \
+		to TimeLineLabel$1.e - (leeway_,ht3_);
+
+	$3 with .w at last line.w ljust;
+}
+#
+# milestone macro
+#
+# the milestone is located at the *end* of the month passed as argument
+#
+# milestone(<month>)
+#
+ms_counter=0;
+ms_month=0;
+ms_x=0;				# center of the triangle
+ms_xl=0;            # (left) start of the triangle
+ms_xr=0;            # (right) end of the triangle
+ms_ytop=0;			# triangle top (wide side)
+ms_ybot=0;			# triangle bottom (tip)
+ms_arrowtop=0;
+define milestone_
+{
+	ms_month	:= $1-1;
+	ms_x		:= labelwidth_+((ms_month+1)*timewidth_);
+	ms_xl		:= ms_x - (timewidth_/2) + (leeway_/2);
+	ms_xr		:= ms_x + (timewidth_/2) - (leeway_/2);
+	ms_ytop		:= MilestonesLabelBox.n.y - leeway_;
+	ms_ybot		:= ms_ytop - labelheight_ + leeway_;
+  ms_arrowtop := labelheight_/5;
+
+	Milestone$2: [
+    box invis ht ms_arrowtop wid timewidth_ - leeway_ fill 0;
+		box invis ht labelheight_ - (leeway_*3) wid timewidth_ \
+			- leeway_ fill 0 with .n at last box .s;
+		line from last box .nw to last box .sw to last box .se to last box .ne \
+        to last box .n + (0,ms_arrowtop) to last box .nw thick 1.2;
+		sprintf("\f3%0.0f\fP",$2) at last box .c;
+	] with .nw at (ms_xl,ms_ytop);
+
+}
+define milestone
+{
+	ms_counter = ms_counter + 1;
+	milestone_($1,ms_counter);
+}
+#
+# deliverable(<month>,<timeline>,<deliverable number string>)
+#
+# the deliverable is located at the *end* of the month passed as argument
+#
+d_month=0;
+d_timeline=0;
+d_x=0;				# center of the double line
+d_xl=0;				# left double line
+d_xr=0;				# right double line
+d_xwid=0;			# width of the double line
+d_ytop=0;			#
+d_ybot=0;			#
+d_ycen=0;     #
+d_dlwid_=40;		# double line width
+define deliverable_doubleline_
+{
+	d_x			:= $1;
+	d_xwid		:= labelwidth_/d_dlwid_;
+	d_xl		:= d_x - (d_xwid/2);
+	d_xr		:= d_x + (d_xwid/2);
+	d_ytop		:= $2;
+	d_ybot		:= $3;
+
+	line from (d_xl,d_ybot) to (d_xl,d_ytop) thick 0.7;
+  line from (d_x,d_ybot) to (d_x,d_ytop) dashed;
+	line from (d_xr,d_ybot) to (d_xr,d_ytop) thick 0.7;
+}
+d_index=0
+dm_switch=0
+dm_ht=0;
+dm_x=0;
+define deliverable_multi
+{
+	d_index		:= $1;
+	dm_switch	:= -(((d_index % 2)*2)-1);
+	dm_ht		:= (labelwidth_/d_dlwid_)*2;
+	d_month		:= $2-1;
+	d_x			  := labelwidth_+((d_month+1)*timewidth_);
+	dm_x		  := dm_switch*(int((d_index+1)/2))*dm_ht;
+	dm_x		  := d_x+dm_x;
+	d_ytop		:= TimeLine$3.n.y;
+	d_ybot		:= TimeLine$3.s.y;
+  d_ycen    := TimeLine$3.c.y;
+
+	if (d_index == 1) then
+	{
+		deliverable_doubleline_(d_x,d_ytop,d_ybot);
+	}
+
+  $4 at dm_x+0.05,d_ycen rjust;
+}
+define deliverable
+{
+	deliverable_multi(1,$1,$2,$3);
+}
+define deliverable2
+{
+	deliverable_multi(2,$1,$2,$3);
+}
+# $Log: gantt.macros,v $
+# Revision 0.3  2002-12-08 10:57:16  nicb
+# [changes by nicb@centrotemporeale.it]
+#
+# - Obsolete macro announcement added
+#
+# Revision 0.2  2002/08/11 01:49:33  nicb
+# [changes by nicb@centrotemporeale.it]
+#
+# - added many features, like milestones, deliverable numbers, etc.
+#
+# Revision 0.1  2001/10/13 17:01:48  nicb
+# [changes by nicb@centrotemporeale.it]
+#
+# - corrected one bug in counting lines :)
+#
+# Revision 0.0  2001/10/13 08:01:48  nicb
+# [added by nicb@centrotemporeale.it]
+#
+# - added macros to perform Gantt charts (+ test file)
+.PE

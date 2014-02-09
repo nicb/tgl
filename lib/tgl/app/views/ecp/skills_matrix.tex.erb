@@ -1,0 +1,26 @@
+%
+% $Id: skills_matrix.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+<% 
+    fullwidth = 0.68
+    npartns = @partners.size
+    skillwidth = 0.25
+    pwidth = (fullwidth - skillwidth)/npartns
+-%>
+\begin{tabular}{|p{<%= skillwidth -%>\textwidth}||*{<%= npartns -%>}{p{<%= pwidth -%>\textwidth}|}}
+\hline
+{\hfill SKILLS\hfill}\Ts\Bs
+<% @partners.each do |p| -%>
+    & \multicolumn{1}{p{<%= pwidth -%>\textwidth}|}{\centering\tiny <%= p.acronym -%> (<%= p.partner_tag -%>)} 
+<% end -%>
+\\
+\hline
+<% @skills.each do |s| -%>
+\hline
+    <%= s.name -%>\Ts\Bs
+    <% @partners.each do |p| -%>
+        & \multicolumn{1}{c|}{<%= p.has_skill?(s) ? '\ding{51}' : ''; -%>}
+    <% end -%>\\
+<% end -%>
+\hline
+\end{tabular}

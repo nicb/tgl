@@ -1,0 +1,50 @@
+%
+% $Id: effort.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+<%
+    full_width = 0.6
+    num_of_wps = @workpackages.size
+    pnum_width = 0.05
+    pacro_width = 0.07
+    wp_width = (full_width - pnum_width - pacro_width)/(num_of_wps+1)
+-%>
+\begin{tabular}{
+     |p{<%= pnum_width -%>\textwidth}
+     |p{<%= pacro_width -%>\textwidth}
+     |*{<%= num_of_wps + 1 -%>}{p{<%= wp_width -%>\textwidth}|}} 
+\hline
+\multicolumn{1}{|p{<%= pnum_width -%>\textwidth}}{\centering\textbf{Partic. number}}\Ts
+ &
+\multicolumn{1}{|p{<%= pacro_width -%>\textwidth}}{\centering\textbf{Partic. short name}}\Bs
+<% @workpackages.each do |wp| -%>
+ &
+ \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\centering\textbf{<%= wp.number -%>}}
+<% end -%>
+ &
+ \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\centering\textbf{Total}}
+\\
+\hline\hline
+<% @partners.each do |p| -%>
+    \multicolumn{1}{|p{<%= pnum_width -%>\textwidth}}{\centering <%= p.partner_tag -%>}\Ts
+    &
+    \multicolumn{1}{|p{<%= pacro_width -%>\textwidth}}{\centering <%= p.acronym -%>}\Bs
+    <%
+        p.efforts.each do
+            |e|
+            wp = e.work_package
+    -%>
+        & \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\hfill<%= p.bold_if_leader(wp) -%> <%= e.person_months.to_i -%>}
+    <% end -%>
+    & \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\hfill\textcolor{<%= p.effort_color -%>}{<%= p.total_effort.to_i -%>}}
+    \\
+<% end -%>
+\hline\hline
+\multicolumn{2}{|l|}{\textbf{Total}}\Ts
+<% @workpackages.each do |wp| -%>
+    & \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\hfill <%= wp.total_effort.to_i -%>}
+<% end -%>
+& \multicolumn{1}{|p{<%= wp_width -%>\textwidth}|}{\hfill\bfseries <%= WorkPackage.project_effort.to_i -%>}\Bs
+\\
+\hline
+\end{tabular}
+

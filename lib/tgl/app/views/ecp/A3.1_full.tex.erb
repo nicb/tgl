@@ -1,0 +1,18 @@
+%
+% $Id: A3.1_full.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+<% @partners.each do |p| -%>
+
+	\begin{table}[H!]
+	  \hrulefill
+	  \begin{scriptsize}
+	      \begin{center}
+            \input{\partAdir/<%= p.partner_tag.sub(/--/,'-') -%>-pre-A3.1}\\
+            \input{\partAdir/<%= p.partner_tag.sub(/--/,'-') -%>-A3.1}
+	      \end{center}
+    \end{scriptsize}
+    \caption{\ACRO A3.1 Form for Partner \THEP<%= p.cap_text_number -%>NUM (\P<%= p.cap_text_number -%>ACRO)}
+	  \hrulefill
+	\end{table}
+
+<% end -%>

@@ -1,0 +1,42 @@
+%
+% $Id: workpackages.tex.erb 2 2011-01-16 01:15:24Z nicb $
+%
+\begin{tabular}{|p{0.04\textwidth}|p{0.24\textwidth}|p{0.05\textwidth}
+                |p{0.04\textwidth}|p{0.08\textwidth}|*{3}{p{0.05\textwidth}|}p{0.15\textwidth}|}
+\hline
+\multicolumn{1}{|p{0.04\textwidth}}{\centering\textbf{WP no.}}\Ts
+ &
+\multicolumn{1}{|p{0.24\textwidth}}{\centering\textbf{Workpackage Description}}\Bs
+ &
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{Type of activity}}
+ &
+\multicolumn{1}{|p{0.04\textwidth}}{\centering\textbf{Lead Partic. No.}}
+ &
+\multicolumn{1}{|p{0.08\textwidth}}{\centering\textbf{Lead Partic. Short Name}}
+ &
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{P/Ms}}
+ &
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{Start Month}}
+ &
+\multicolumn{1}{|p{0.05\textwidth}}{\centering\textbf{End Month}}
+ &
+\multicolumn{1}{|p{0.15\textwidth}|}{\centering\textbf{Deliverables}}
+\\
+<% @workpackages.each do |wp| -%>
+    \hline
+    <%= wp.number -%>\Ts & <%= wp.name -%>\Bs
+    & \multicolumn{1}{c|}{\tiny <%= wp.activity -%>}
+    & \multicolumn{1}{c|}{<%= wp.leader.partner_tag -%>}
+    & \multicolumn{1}{c|}{<%= wp.leader.acronym -%>}
+    & \multicolumn{1}{r|}{<%= wp.total_effort.to_i -%>}
+    & \multicolumn{1}{r|}{<%= wp.start_month -%>}
+    & \multicolumn{1}{r|}{<%= wp.end_month -%>}
+    & <%= wp.deliverables_list -%>\\
+<% end -%>
+\hline
+ & \textbf{TOTAL}\Ts & \multicolumn{3}{c|}{}\Bs
+ & \multicolumn{1}{r|}{\textbf{<%= WorkPackage.project_effort.to_i -%>}} & \multicolumn{3}{c|}{}
+ \\
+\hline
+\end{tabular}
+
