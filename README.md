@@ -3,7 +3,8 @@ tgl
 
 * https://github.com/nicb/tgl
 
-== DESCRIPTION:
+DESCRIPTION
+====
 
 tgl is a table generator gem for EC-projects. Given a specific data  set
 it creates all the latex  tables  ready  to  be  incorporated  into  the
