@@ -11,23 +11,28 @@ it creates all the latex  tables  ready  to  be  incorporated  into  the
 technical annex of a project (part B). It  also  create  the  mock  EPSS
 forms for each partner with all the calculations.
 
-== FEATURES/PROBLEMS:
+FEATURES/PROBLEMS
+====
 
 tgl is highly dependent on the structure of the containing project.
 
-== SYNOPSIS:
+SYNOPSIS
+====
 
   FIX (code sample of usage)
 
-== REQUIREMENTS:
+REQUIREMENTS
+====
 
 Required gems: active_record (>= 2.3.10), active_support (>= 2.3.10)
 
-== INSTALL:
+INSTALL
+====
 
 * FIX (sudo gem install, anything else)
 
-== LICENSE:
+LICENSE
+====
 
     tgl
     Copyright (C) 2011-2014  Nicola Bernardini
